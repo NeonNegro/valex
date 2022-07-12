@@ -8,4 +8,4 @@
     "ts-node": {
       "esm": true
     }
-  }
+}
