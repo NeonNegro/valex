@@ -2,7 +2,6 @@ import { Router } from "express";
 import * as cardController from '../controllers/cardController.js';
 import validateSchemaMiddleware from "../middlewares/validateSchemaMiddleware.js";
 import activateCardSchema from "../../schemas/activateCardSchema.js";
-//import newCardSchema from "../schemas/newCardSchema.js";
 import newCardSchema from "../../schemas/newCardSchema.js";
 
 
