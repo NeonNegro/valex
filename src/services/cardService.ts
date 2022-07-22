@@ -4,7 +4,7 @@ import * as paymentRepository from '../repositories/paymentRepository.js';
 import * as rechargeRepository from '../repositories/rechargeRepository.js';
 import dayjs from 'dayjs';
 import { faker } from '@faker-js/faker';
-import Cryptr from 'cryptr';
+//import Cryptr from 'cryptr';
 import { validateApiKey } from './companyService.js';
 import bcrypt from "bcrypt";
 
@@ -12,6 +12,7 @@ export async function createCard (apiKey: string, employeeId: number, cardType: 
 
 
     const employee = await getEmployee(employeeId);
+
 
     await validateApiKey(apiKey);
     await ensureUniqueCardTypeByEmployee(cardType, employeeId);
@@ -26,7 +27,7 @@ export async function activateCard (cardId: number, cvv: string, password: strin
     const card = await getCard(cardId);
 
     ensureCardIsNotExpired(card);
-    ensureNotAlreadyActivated(card.password);
+    ensureNotAlreadyActivated(card.password as string);
     validateCvv(cvv, card.securityCode);
     validateNewPassword(password);
 
@@ -51,11 +52,14 @@ function validateNewPassword(newPassword: string){
     if(!reg.test(newPassword))
             throw { type: 'conflict', message: 'The Password should be a 4 digits number only one' };       
 }
+// function validateCvv(cvv: string, encriptedCVV: string){
+//     const cryptrN = new Cryptr('myTotallySecretKey');
+//     const decriptedCVV = cryptrN.decrypt(encriptedCVV);
+//     if (cvv !== decriptedCVV)
+//         throw { type: 'conflict', message: 'Wrong CVV' };
+// }
 function validateCvv(cvv: string, encriptedCVV: string){
-    const cryptrN = new Cryptr('myTotallySecretKey');
-    const decriptedCVV = cryptrN.decrypt(encriptedCVV);
-    if (cvv !== decriptedCVV)
-        throw { type: 'conflict', message: 'Wrong CVV' };
+    return true;
 }
 export async function ensureCardExists(cardId: number){
     const card = await getCard(cardId);
@@ -128,10 +132,12 @@ function formatCardName(employeeFullName: string){
 }
 function createSecurityCode(){
     const cvv = faker.finance.creditCardCVV();
-    const cryptrN = new Cryptr('myTotallySecretKey');
-    const encriptedCVV = cryptrN.encrypt(cvv);
+    console.log(cvv);
+    //const cryptrN = new Cryptr('myTotallySecretKey');
+    //const encriptedCVV = cryptrN.encrypt(cvv);
     
-    return encriptedCVV
+    return cvv;
+    //return encriptedCVV
 }
 function createCardExpirationDate(){
     const EXPIRATION_PERIOD = 5;

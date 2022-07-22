@@ -1,11 +1,23 @@
 {
     "compilerOptions": {
+      "target": "ES6",
       "esModuleInterop": true,
-      "module": "es6",
       "moduleResolution": "node",
-      "outDir": "dist"
+      "outDir": "dist",
+      "sourceMap": true,
+      "strict": true,
+      "module": "commonjs",
+      "noImplicitAny": false
     },
     "ts-node": {
       "esm": true
     }
 }
+
+// {
+//   "compilerOptions": {
+//     "sourceMap": true,
+//     "strict": true,
+//     "module": "commonjs",
+//   }
+// }

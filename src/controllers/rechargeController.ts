@@ -6,6 +6,6 @@ export async function rechargeCard(req: Request, res: Response) {
     const {amount, cardId} = req.body;
     const apiKey = req.header('x-api-key');
 
-    await rechargeService.insertRecharge(apiKey, cardId, amount);
+    await rechargeService.insertRecharge(apiKey as string, cardId, amount);
     res.sendStatus(201);
 }

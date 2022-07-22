@@ -14,7 +14,7 @@ export async function insertPayment (cardId: number, password: string, businessI
 
         const card = await cardService.getCard(cardId);
         cardService.ensureCardIsNotExpired(card);
-        cardService.validatePassword(password, card.password);
+        cardService.validatePassword(password, card.password as string);
         const business = await ensureBusinessExists(businessId);
         ensureCardTypeIsSameOfBusiness(business.type, card.type);
         await cardService.ensureSuficientBalance(cardId, amout);
